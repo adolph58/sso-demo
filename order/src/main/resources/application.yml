@@ -1,0 +1,33 @@
+auth-server: http://localhost:8000/auth # 认证服务器地址
+
+server:
+  port: 8003
+
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.54:3306/sso_demo?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    # com.mysql.jdbc.Driver Spring Boot 2.1.0 之前用这个  com.mysql.cj.jdbc.Driver
+
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: secret
+      scope: all
+      access-token-uri: ${auth-server}/oauth/token # 获取access token接口
+      user-authorization-uri: ${auth-server}/oauth/authorize #  获取Authorization Code接口
+#      personal-authentication-scheme: form
+    resource:
+      token-info-uri: ${auth-server}/oauth/check_token # 验证token的接口
+      # user-info-uri: ${auth-server}/user
+
+#securityconfig:
+#  logoutsuccssurl: /tosignout
+#  permitall: /rest/**,/bb**
+#  deniedpage: /deny
+#  urlroles: /**/new/** = admin;
+#            /**/edit/** = admin,editor;
+#            /**/delete/** = admin

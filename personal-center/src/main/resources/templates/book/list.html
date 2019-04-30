@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>我的图书</title>
+</head>
+<body>
+<div th:insert="~{fragments/header::logout}"></div>
+<a href="/">返回个人中心</a><br>
+<h2>我的图书列表</h2>
+<div sec:authorize="hasAuthority('ROLE_ADMIN')">
+    <button onclick="">添加</button>
+</div>
+
+<table border="1" cellspacing="0" style="width: 20%">
+    <thead>
+        <tr>
+            <th>名称</th>
+            <th>出版社</th>
+            <th>价格</th>
+            <th>根据 id 查看详情</th>
+            <th>根据书名查看详情</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="book: ${books}">
+            <td th:text="${book.name}">深入理解 Nginx</td>
+            <td th:text="${book.publisher}">机械工业出版社</td>
+            <td th:text="${book.price}">99</td>
+            <!-- /book/detail/5 id 在路径中 -->
+            <td><span sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/book/detail/{id}(id=${book.id})}">查看详情</a></span></td>
+            <!-- /book/detail?name=Java 编程思想 常规方式 -->
+            <td><span sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/book/detail(name=${book.name})}">查看详情</a></span></td>
+
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

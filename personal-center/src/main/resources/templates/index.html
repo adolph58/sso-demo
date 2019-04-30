@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>个人中心</title>
+
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js-cookie/js.cookie.js}"></script>
+</head>
+
+<body>
+<div class="container form-margin-top">
+    <h2><a href="http://localhost:8000/auth">首页</a></h2>
+    <h2>个人中心</h2>
+    <h3><span>欢迎您，<em th:text="${user.name}">用户（name）</em>！</span></h3>
+    <p>
+        <button id ="logout" type="button">退出登录</button>
+    </p>
+    <h4><a href="/book/list">我的图书</a></h4>
+</div>
+
+<div class="jumbotron text-center">
+    <h1>我的第一个 Bootstrap 页面</h1>
+    <p>重置浏览器大小查看效果!</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>第一列</h3>
+            <p>Java</p>
+            <p>多线程、反射、注解</p>
+        </div>
+        <div class="col-sm-4">
+            <h3>第二列</h3>
+            <p>Spring Boot</p>
+            <p>快速开发必备，Spring Cloud 的基石</p>
+        </div>
+        <div class="col-sm-4">
+            <h3>第三列</h3>
+            <p>Spring Cloud</p>
+            <p>微服务全家桶</p>
+        </div>
+    </div>
+</div>
+<form th:action="@{/logout}" method="post" id="logoutform">
+</form>
+</body>
+<script>
+
+    $("#logout").click(function () {
+        if (confirm('您确定退出吗？')) {
+            $("#logoutform").submit();
+        }
+    });
+    // $("#btn").click(function(){
+    //     alert("骗你的，退不出");
+    // });
+
+</script>
+</html>

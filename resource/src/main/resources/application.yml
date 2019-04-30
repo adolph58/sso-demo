@@ -1,0 +1,25 @@
+auth-server: http://localhost:8000/auth # 认证服务器地址
+
+server:
+  port: 8001
+
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.54:3306/sso_demo?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    # com.mysql.jdbc.Driver Spring Boot 2.1.0 之前用这个  com.mysql.cj.jdbc.Driver
+
+security:
+  oauth2:
+    client:
+      client-id: client # 授权服务器配置的client id
+      client-secret: secret # 授权服务器配置的client secret
+      scope: all
+      #access-token-uri: ${auth-server}/oauth/token # 获取access token接口
+      #user-authorization-uri: ${auth-server}/oauth/authorize #  获取Authorization Code接口
+    resource:
+      token-info-uri: ${auth-server}/oauth/check_token # 验证token的接口
+#      user-info-uri: ${auth-server}/user # 一个可以获取认证授权的自定义接口，可以在授权服务器，也可以在其他服务器上
+#      prefer-token-info: true # 如果同时配置了token-info-uri 和 user-info-uri，这个现象设置使用哪个取验证授权
