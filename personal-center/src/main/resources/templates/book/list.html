@@ -9,7 +9,8 @@
 <a href="/">返回个人中心</a><br>
 <h2>我的图书列表</h2>
 <div sec:authorize="hasAuthority('ROLE_ADMIN')">
-    <button onclick="">添加</button>
+    <a href="/book/add" class="weui-btn weui-btn_primary" id="btnSave">添加</a>
+    <!--<button onclick="">添加</button>-->
 </div>
 
 <table border="1" cellspacing="0" style="width: 20%">

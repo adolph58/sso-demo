@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图书列表</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js-cookie/js.cookie.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/jquery.form-2.63.js}"></script>
+</head>
+<body>
+<div th:insert="~{fragments/header::logout}"></div>
+<h2>添加图书</h2>
+<a href="/book/list">返回</a>
+<form class="form-signin" method="post" id="addBookForm" enctype="form-data">
+    <h2 class="form-signin-heading" align="center">添加图书</h2>
+    <input type="text" name="name" class="form-control form-margin-top" placeholder="书名" required autofocus>
+    <input type="text" name="price" class="form-control form-margin-top" placeholder="价格" required autofocus>
+    <input type="text" name="publisher" class="form-control form-margin-top" placeholder="出版社" required autofocus>
+    <input type="text" name="description" class="form-control form-margin-top" placeholder="图书描述" required autofocus>
+</form>
+<button id="btnSave" class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+</body>
+
+<script>
+    $(document).ready(function () {
+
+        $(document).on("click", "#btnSave", function () {
+            // 第一种方法：jQuery 实现
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/book/add',
+                data: $("#addBookForm").serializeArray(),
+                contentType: "application/x-www-form-urlencoded",
+                success: function (data) {
+                    var returnCode = data.code;
+                    var message = data.msg;
+                    if (returnCode == 200) {
+                        alert(message);
+                        window.location.href = "/book/list";
+                    } else {
+                        alert(message);
+                        return false;
+                    }
+                }
+            })
+
+            // 第二种方法：jquery.form-2.63.js 实现
+            // $("#addBookForm").ajaxSubmit({
+            //     method: "POST",
+            //     dataType: "json",
+            //     url: "/book/add",
+            //     success: function (data) {
+            //         var returnCode = data.code;
+            //         var message = data.msg;
+            //         if (returnCode == 200) {
+            //             alert(message);
+            //             window.location.href = "/book/list";
+            //         } else {
+            //             alert(message);
+            //             return false;
+            //         }
+            //     }
+            // });
+        });
+
+    });
+</script>
+</html>

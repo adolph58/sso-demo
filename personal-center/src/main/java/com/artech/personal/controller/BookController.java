@@ -1,14 +1,14 @@
 package com.artech.personal.controller;
 
+import com.artech.common.util.Result;
+import com.artech.common.util.ResultUtil;
+import com.artech.personal.domain.entity.Book;
 import com.artech.personal.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/book")
@@ -30,11 +30,27 @@ public class BookController {
         return "book/add";
     }
 
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PostMapping("/add")
+    @ResponseBody
+    public Result<Book> add(Book book) {
+        Book result = bookService.addBook(book);
+        return ResultUtil.success(result);
+    }
+
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         model.addAttribute("book", bookService.findById(id));
         return "book/detail";
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("/info/{id}")
+    @ResponseBody
+    public Result<Book> info(@PathVariable("id") Long id) {
+        Book book = bookService.findById(id);
+        return ResultUtil.success(book);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
