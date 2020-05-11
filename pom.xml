@@ -15,12 +15,12 @@
     </parent>
 
     <groupId>com.artech</groupId>
-    <artifactId>artech-root</artifactId>
+    <artifactId>sso-demo</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <name>artech-root</name>
-    <description>artech root project for Spring Boot</description>
+    <name>sso-demo</name>
+    <description>SSO Demo project for Spring Boot</description>
 
     <modules>
         <module>auth-center</module>
