@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 
@@ -35,6 +37,12 @@ public class ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Qualifier("dataSource")
     private DataSource dataSource;
 
+    @Autowired
+    private JwtTokenStore jwtTokenStore;
+
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
@@ -47,8 +55,8 @@ public class ServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         // 配置 token 获取和验证时的策略
         security.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()"); //isAuthenticated():排除anonymous   isFullyAuthenticated():排除anonymous以及remember-me
-                //.allowFormAuthenticationForClients(); //允许表单认证  这段代码在授权码模式下会导致无法根据code　获取token　
+                .checkTokenAccess("isAuthenticated()")//; //isAuthenticated():排除anonymous   isFullyAuthenticated():排除anonymous以及remember-me
+                .allowFormAuthenticationForClients(); //允许表单认证  这段代码在授权码模式下会导致无法根据code　获取token　
 
                 // .realm(resource_id) 指定哪些资源是需要授权验证的
     }
@@ -100,8 +108,8 @@ public class ServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         // 配置 tokenStore，保存到 redis 缓存中
         endpoints.authenticationManager(authenticationManager)
+                .tokenStore(jwtTokenStore).accessTokenConverter(jwtAccessTokenConverter)
                 //.tokenStore(new CustomRedisTokenStore(redisConnectionFactory))
-                .tokenStore(new CustomRedisTokenStore(redisConnectionFactory))
                 // 不添加 userDetailsService，刷新 access_token 时会报错(无法加载用户信息)
                 .userDetailsService(userDetailsService);
 

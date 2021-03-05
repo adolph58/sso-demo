@@ -11,6 +11,9 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     # com.mysql.jdbc.Driver Spring Boot 2.1.0 之前用这个  com.mysql.cj.jdbc.Driver
 
+  application:
+    name: personal-center
+
 security:
   oauth2:
     client:

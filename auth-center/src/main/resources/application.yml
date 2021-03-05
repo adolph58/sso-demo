@@ -32,6 +32,8 @@ spring:
         min-idle: 0
         max-wait: 3s
 
+  application:
+    name: auth-center
 #security:
 #  oauth2:
 #    personal:
