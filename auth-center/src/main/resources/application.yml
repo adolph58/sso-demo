@@ -38,4 +38,6 @@ spring:
 #      registered-redirect-uri: http://localhost:18082/login
 
 logging:
-  path: D:\logs\sso_demo\auth-center
+  path: /logs/${spring.application.name}
+  level:
+    root: info

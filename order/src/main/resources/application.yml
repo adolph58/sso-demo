@@ -31,3 +31,8 @@ security:
 #  urlroles: /**/new/** = admin;
 #            /**/edit/** = admin,editor;
 #            /**/delete/** = admin
+
+logging:
+  path: /logs/${spring.application.name}
+  level:
+    root: info
