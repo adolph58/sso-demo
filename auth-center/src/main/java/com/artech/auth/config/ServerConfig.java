@@ -54,6 +54,7 @@ public class ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         // 配置 token 获取和验证时的策略
+        // security.passwordEncoder(new BCryptPasswordEncoder()) 如果加密要加上
         security.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")//; //isAuthenticated():排除anonymous   isFullyAuthenticated():排除anonymous以及remember-me
                 .allowFormAuthenticationForClients(); //允许表单认证  这段代码在授权码模式下会导致无法根据code　获取token　
